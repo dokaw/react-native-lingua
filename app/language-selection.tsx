@@ -14,9 +14,11 @@ import { Image } from "expo-image";
 import { languages } from "@/data/languages";
 import { images } from "@/constants/images";
 import type { Language } from "@/types/learning";
+import { useLanguageStore } from "@/store/languageStore";
 
 export default function LanguageSelectionScreen() {
-  const [selectedId, setSelectedId] = useState<string>("es");
+  const { selectedLanguageId, setSelectedLanguage } = useLanguageStore();
+  const [selectedId, setSelectedId] = useState<string>(selectedLanguageId ?? "es");
   const [search, setSearch] = useState("");
 
   const filtered = languages.filter((l) =>
@@ -71,7 +73,7 @@ export default function LanguageSelectionScreen() {
       {/* Bottom: confirm button + earth illustration */}
       <View>
         <View className="px-5 pt-3 pb-3">
-          <TouchableOpacity style={styles.confirmButton} onPress={() => router.back()}>
+          <TouchableOpacity style={styles.confirmButton} onPress={() => { setSelectedLanguage(selectedId); router.replace("/"); }}>
             <Text className="btn__label">Confirm language</Text>
           </TouchableOpacity>
         </View>
@@ -101,7 +103,7 @@ function LanguageCard({
     >
       <Image
         source={{ uri: language.flag }}
-        className="w-10 h-10 rounded-full overflow-hidden"
+        style={styles.flag}
         contentFit="cover"
       />
       <View className="flex-1 ml-3">
@@ -159,6 +161,12 @@ const styles = StyleSheet.create({
   cardSelected: {
     backgroundColor: "#EDE9FE",
     borderColor: "#6C4EF5",
+  },
+  // expo-image borderRadius must be in StyleSheet — overflow:hidden via className doesn't clip
+  flag: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   // TouchableOpacity exception — confirm button
   confirmButton: {
