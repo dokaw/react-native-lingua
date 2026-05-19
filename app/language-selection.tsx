@@ -26,17 +26,19 @@ export default function LanguageSelectionScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       {/* Header */}
-      <View style={styles.header}>
+      <View className="flex-row items-center px-5 pt-1 pb-3">
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="#001328" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Choose a language</Text>
-        <View style={styles.headerSpacer} />
+        <Text className="flex-1 text-center text-[16px] font-poppins-semibold text-text-primary">
+          Choose a language
+        </Text>
+        <View className="w-10" />
       </View>
 
       {/* Search */}
-      <View style={styles.searchWrapper}>
-        <View style={styles.searchBar}>
+      <View className="px-5 pb-4">
+        <View className="flex-row items-center bg-surface rounded-xl px-4 py-3">
           <Ionicons name="search-outline" size={18} color="#6B7280" />
           <TextInput
             style={styles.searchInput}
@@ -54,7 +56,7 @@ export default function LanguageSelectionScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.sectionLabel}>Popular</Text>
+        <Text className="text--h4 mb-3">Popular</Text>
 
         {filtered.map((lang) => (
           <LanguageCard
@@ -68,17 +70,14 @@ export default function LanguageSelectionScreen() {
 
       {/* Bottom: confirm button + earth illustration */}
       <View>
-        <View style={styles.confirmWrapper}>
-          <TouchableOpacity
-            style={styles.confirmButton}
-            onPress={() => router.back()}
-          >
-            <Text style={styles.confirmButtonText}>Confirm language</Text>
+        <View className="px-5 pt-3 pb-3">
+          <TouchableOpacity style={styles.confirmButton} onPress={() => router.back()}>
+            <Text className="btn__label">Confirm language</Text>
           </TouchableOpacity>
         </View>
         <Image
           source={images.earth}
-          style={styles.earthImage}
+          className="w-full h-[130px]"
           contentFit="cover"
         />
       </View>
@@ -102,15 +101,19 @@ function LanguageCard({
     >
       <Image
         source={{ uri: language.flag }}
-        style={styles.flagImage}
+        className="w-10 h-10 rounded-full overflow-hidden"
         contentFit="cover"
       />
-      <View style={styles.cardText}>
-        <Text style={styles.langName}>{language.name}</Text>
-        <Text style={styles.learnerCount}>{language.learnerCount}</Text>
+      <View className="flex-1 ml-3">
+        <Text className="font-poppins-semibold text-[15px] text-text-primary">
+          {language.name}
+        </Text>
+        <Text className="text--caption text--muted mt-0.5">
+          {language.learnerCount}
+        </Text>
       </View>
       {isSelected ? (
-        <View style={styles.checkCircle}>
+        <View className="w-6 h-6 rounded-full bg-primary items-center justify-center">
           <Ionicons name="checkmark" size={14} color="#FFFFFF" />
         </View>
       ) : (
@@ -121,41 +124,14 @@ function LanguageCard({
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 4,
-    paddingBottom: 12,
-  },
+  // TouchableOpacity exception — layout for back button hit area
   backButton: {
     width: 40,
     height: 40,
     alignItems: "flex-start",
     justifyContent: "center",
   },
-  headerTitle: {
-    flex: 1,
-    textAlign: "center",
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 16,
-    color: "#001328",
-  },
-  headerSpacer: {
-    width: 40,
-  },
-  searchWrapper: {
-    paddingHorizontal: 20,
-    paddingBottom: 16,
-  },
-  searchBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#F6F7FB",
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-  },
+  // TextInput exception
   searchInput: {
     flex: 1,
     marginLeft: 8,
@@ -163,16 +139,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#001328",
   },
+  // ScrollView contentContainerStyle exception
   scrollContent: {
     paddingHorizontal: 20,
     paddingBottom: 8,
   },
-  sectionLabel: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 15,
-    color: "#001328",
-    marginBottom: 12,
-  },
+  // TouchableOpacity with dynamic border/bg based on selected state
   card: {
     flexDirection: "row",
     alignItems: "center",
@@ -188,54 +160,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#EDE9FE",
     borderColor: "#6C4EF5",
   },
-  flagImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    overflow: "hidden",
-  },
-  cardText: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  langName: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 15,
-    color: "#001328",
-  },
-  learnerCount: {
-    fontFamily: "Poppins-Regular",
-    fontSize: 12,
-    color: "#6B7280",
-    marginTop: 1,
-  },
-  checkCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "#6C4EF5",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  confirmWrapper: {
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
+  // TouchableOpacity exception — confirm button
   confirmButton: {
     backgroundColor: "#6C4EF5",
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: "center",
     justifyContent: "center",
-  },
-  confirmButtonText: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 16,
-    color: "#FFFFFF",
-  },
-  earthImage: {
-    width: "100%",
-    height: 130,
   },
 });
