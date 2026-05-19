@@ -1,0 +1,231 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+/* ─── Design Tokens ────────────────────────────────────────────────────────── */
+@theme {
+  /* Brand primaries */
+  --color-primary: #6C4EF5;
+  --color-primary-deep: #5B3BF6;
+  --color-lingua-blue: #4D88FF;
+  --color-lingua-green: #21C168;
+
+  /* Semantic colors */
+  --color-success: #21C168;
+  --color-warning: #FFCB00;
+  --color-streak: #FF8A00;
+  --color-error: #FF4D4F;
+  --color-info: #4D88FF;
+
+  /* Neutrals */
+  --color-text-primary: #001328;
+  --color-text-secondary: #6B7280;
+  --color-border: #E5E7EB;
+  --color-surface: #F6F7FB;
+  --color-background: #FFFFFF;
+
+  /* Font families */
+  --font-poppins: 'Poppins-Regular';
+  --font-poppins-medium: 'Poppins-Medium';
+  --font-poppins-semibold: 'Poppins-SemiBold';
+  --font-poppins-bold: 'Poppins-Bold';
+
+  /* Font sizes */
+  --text-h1: 32px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --text-h4: 16px;
+  --text-body-lg: 16px;
+  --text-body-md: 14px;
+  --text-body-sm: 13px;
+  --text-caption: 11px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* ─── Typography BEM Utilities ─────────────────────────────────────────────── */
+@layer utilities {
+  /* Headings */
+  .text--h1 {
+    font-size: 32px;
+    font-family: 'Poppins-Bold';
+    color: #001328;
+    line-height: 38px;
+  }
+
+  .text--h2 {
+    font-size: 24px;
+    font-family: 'Poppins-SemiBold';
+    color: #001328;
+    line-height: 31px;
+  }
+
+  .text--h3 {
+    font-size: 20px;
+    font-family: 'Poppins-SemiBold';
+    color: #001328;
+    line-height: 26px;
+  }
+
+  .text--h4 {
+    font-size: 16px;
+    font-family: 'Poppins-Medium';
+    color: #001328;
+    line-height: 22px;
+  }
+
+  /* Body text */
+  .text--body-lg {
+    font-size: 16px;
+    font-family: 'Poppins-Regular';
+    color: #001328;
+    line-height: 26px;
+  }
+
+  .text--body-md {
+    font-size: 14px;
+    font-family: 'Poppins-Regular';
+    color: #001328;
+    line-height: 22px;
+  }
+
+  .text--body-sm {
+    font-size: 13px;
+    font-family: 'Poppins-Regular';
+    color: #001328;
+    line-height: 21px;
+  }
+
+  .text--caption {
+    font-size: 11px;
+    font-family: 'Poppins-Regular';
+    color: #6B7280;
+    line-height: 15px;
+  }
+
+  /* Text color modifiers */
+  .text--muted {
+    color: #6B7280;
+  }
+
+  .text--primary-color {
+    color: #6C4EF5;
+  }
+
+  .text--success {
+    color: #21C168;
+  }
+
+  .text--error {
+    color: #FF4D4F;
+  }
+
+  .text--streak {
+    color: #FF8A00;
+  }
+
+  /* ─── Card Utilities ────────────────────────────────────────────────────── */
+  .card {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .card--surface {
+    background-color: #F6F7FB;
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .card--bordered {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 16px;
+    border-width: 1px;
+    border-color: #E5E7EB;
+  }
+
+  /* ─── Button Utilities ──────────────────────────────────────────────────── */
+  .btn {
+    border-radius: 12px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn--primary {
+    background-color: #6C4EF5;
+    border-radius: 12px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn--secondary {
+    background-color: transparent;
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: #6C4EF5;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn__label {
+    font-size: 16px;
+    font-family: 'Poppins-SemiBold';
+    color: #FFFFFF;
+  }
+
+  .btn__label--secondary {
+    font-size: 16px;
+    font-family: 'Poppins-SemiBold';
+    color: #6C4EF5;
+  }
+
+  /* ─── Badge / Pill Utilities ────────────────────────────────────────────── */
+  .badge {
+    border-radius: 9999px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .badge--primary {
+    background-color: #EDE9FE;
+  }
+
+  .badge--success {
+    background-color: #DCFCE7;
+  }
+
+  .badge--warning {
+    background-color: #FEF9C3;
+  }
+
+  .badge--streak {
+    background-color: #FFF7ED;
+  }
+
+  .badge--error {
+    background-color: #FEE2E2;
+  }
+}
