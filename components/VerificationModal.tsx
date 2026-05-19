@@ -8,17 +8,29 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
-import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   visible: boolean;
   email: string;
   onClose: () => void;
+  onVerify: (code: string) => Promise<void>;
+  onResend?: () => Promise<void>;
+  isLoading?: boolean;
+  error?: string;
 }
 
-export function VerificationModal({ visible, email, onClose }: Props) {
+export function VerificationModal({
+  visible,
+  email,
+  onClose,
+  onVerify,
+  onResend,
+  isLoading = false,
+  error,
+}: Props) {
   const [code, setCode] = useState("");
   const inputRef = useRef<TextInput>(null);
 
@@ -34,8 +46,8 @@ export function VerificationModal({ visible, email, onClose }: Props) {
   const handleCodeChange = (text: string) => {
     const digits = text.replace(/\D/g, "").slice(0, 6);
     setCode(digits);
-    if (digits.length === 6) {
-      setTimeout(() => router.replace("/"), 300);
+    if (digits.length === 6 && !isLoading) {
+      onVerify(digits);
     }
   };
 
@@ -91,6 +103,7 @@ export function VerificationModal({ visible, email, onClose }: Props) {
             maxLength={6}
             style={styles.hiddenInput}
             caretHidden
+            editable={!isLoading}
           />
 
           {/* Digit boxes — tap to re-focus keyboard */}
@@ -106,9 +119,28 @@ export function VerificationModal({ visible, email, onClose }: Props) {
             ))}
           </TouchableOpacity>
 
+          {/* Loading indicator */}
+          {isLoading && (
+            <ActivityIndicator
+              size="small"
+              color="#6C4EF5"
+              style={{ marginBottom: 12 }}
+            />
+          )}
+
+          {/* Error message */}
+          {error ? (
+            <Text style={styles.errorText}>{error}</Text>
+          ) : null}
+
           <Text style={styles.resendText}>
             Didn&apos;t receive it?{" "}
-            <Text style={styles.resendLink}>Resend code</Text>
+            <Text
+              style={styles.resendLink}
+              onPress={onResend}
+            >
+              Resend code
+            </Text>
           </Text>
         </View>
       </KeyboardAvoidingView>
@@ -177,7 +209,7 @@ const styles = StyleSheet.create({
   codeRow: {
     flexDirection: "row",
     gap: 10,
-    marginBottom: 24,
+    marginBottom: 16,
   },
   digitBox: {
     width: 46,
@@ -201,6 +233,13 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-SemiBold",
     fontSize: 22,
     color: "#001328",
+  },
+  errorText: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 13,
+    color: "#D32F2F",
+    textAlign: "center",
+    marginBottom: 12,
   },
   resendText: {
     fontFamily: "Poppins-Regular",
