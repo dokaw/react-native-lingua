@@ -1,18 +1,18 @@
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import React, { useEffect } from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Dimensions,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -44,9 +44,9 @@ const TABS: TabConfig[] = [
   },
   {
     name: "learn",
-    label: "Learn",
-    activeIcon: "book",
-    inactiveIcon: "book-outline",
+    label: "Lesson",
+    activeIcon: "school",
+    inactiveIcon: "school-outline",
     library: "Ionicons",
   },
   {
@@ -95,10 +95,7 @@ function circleLeft(index: number) {
   return index * TAB_WIDTH + (TAB_WIDTH - CIRCLE_SIZE) / 2;
 }
 
-export default function CustomTabBar({
-  state,
-  navigation,
-}: BottomTabBarProps) {
+export default function CustomTabBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
   const activeIndex = state.index;
 
