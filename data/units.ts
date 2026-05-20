@@ -44,7 +44,19 @@ export const units: Unit[] = [
     order: 1,
     color: '#FF4D4F',
     iconEmoji: '🌸',
-    lessonIds: ['ja-u1-l1'],
+    lessonIds: ['ja-u1-l1', 'ja-u1-l2', 'ja-u1-l3', 'ja-u1-l4', 'ja-u1-l5', 'ja-u1-l6'],
+  },
+
+  // ─── Korean ────────────────────────────────────────────────────────────────
+  {
+    id: 'ko-unit-1',
+    languageId: 'ko',
+    title: 'Annyeong! First Words',
+    description: 'Learn essential Korean greetings, politeness, and daily expressions.',
+    order: 1,
+    color: '#4D88FF',
+    iconEmoji: '🌸',
+    lessonIds: ['ko-u1-l1', 'ko-u1-l2', 'ko-u1-l3', 'ko-u1-l4', 'ko-u1-l5', 'ko-u1-l6'],
   },
 
   // ─── German ────────────────────────────────────────────────────────────────
@@ -56,7 +68,19 @@ export const units: Unit[] = [
     order: 1,
     color: '#FF8A00',
     iconEmoji: '🍺',
-    lessonIds: ['de-u1-l1'],
+    lessonIds: ['de-u1-l1', 'de-u1-l2', 'de-u1-l3', 'de-u1-l4', 'de-u1-l5', 'de-u1-l6'],
+  },
+
+  // ─── Chinese ───────────────────────────────────────────────────────────────
+  {
+    id: 'zh-unit-1',
+    languageId: 'zh',
+    title: 'Nǐ Hǎo! First Words',
+    description: 'Begin your Mandarin journey with greetings and essential phrases.',
+    order: 1,
+    color: '#FF4D4F',
+    iconEmoji: '🐉',
+    lessonIds: ['zh-u1-l1', 'zh-u1-l2', 'zh-u1-l3', 'zh-u1-l4', 'zh-u1-l5', 'zh-u1-l6'],
   },
 ];
 
