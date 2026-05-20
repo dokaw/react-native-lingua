@@ -15,6 +15,7 @@ import { useSignUp } from "@clerk/expo";
 import { images } from "@/constants/images";
 import { VerificationModal } from "@/components/VerificationModal";
 import { SocialAuthButtons } from "@/components/SocialAuthButtons";
+import { posthog } from "@/lib/posthog";
 
 export default function SignUpScreen() {
   const { signUp, errors, fetchStatus } = useSignUp();
@@ -43,6 +44,11 @@ export default function SignUpScreen() {
       return;
     }
     if (signUp.status === "complete") {
+      posthog.identify(email, {
+        $set: { email },
+        $set_once: { first_signup_date: new Date().toISOString() },
+      });
+      posthog.capture("user_signed_up", { email });
       await signUp.finalize({
         navigate: ({ decorateUrl }) => {
           const url = decorateUrl("/");

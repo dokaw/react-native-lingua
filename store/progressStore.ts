@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import * as SecureStore from "expo-secure-store";
 import type { StateStorage } from "zustand/middleware";
+import { posthog } from "@/lib/posthog";
 
 const secureStorage: StateStorage = {
   getItem: (name) => SecureStore.getItemAsync(name),
@@ -25,11 +26,15 @@ export const useProgressStore = create<ProgressStore>()(
       xp: 15,
       streak: 12,
       completedLessonIds: [],
-      addXP: (amount) =>
-        set({ xp: Math.min(get().xp + amount, XP_DAILY_GOAL) }),
+      addXP: (amount) => {
+        const newXp = Math.min(get().xp + amount, XP_DAILY_GOAL);
+        posthog.capture("xp_earned", { amount, total_xp: newXp });
+        set({ xp: newXp });
+      },
       completeLesson: (id) => {
         const { completedLessonIds } = get();
         if (!completedLessonIds.includes(id)) {
+          posthog.capture("lesson_completed", { lesson_id: id });
           set({ completedLessonIds: [...completedLessonIds, id] });
         }
       },
