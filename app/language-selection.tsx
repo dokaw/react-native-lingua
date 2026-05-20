@@ -15,6 +15,7 @@ import { languages } from "@/data/languages";
 import { images } from "@/constants/images";
 import type { Language } from "@/types/learning";
 import { useLanguageStore } from "@/store/languageStore";
+import { posthog } from "@/lib/posthog";
 
 export default function LanguageSelectionScreen() {
   const { selectedLanguageId, setSelectedLanguage } = useLanguageStore();
@@ -73,7 +74,18 @@ export default function LanguageSelectionScreen() {
       {/* Bottom: confirm button + earth illustration */}
       <View>
         <View className="px-5 pt-3 pb-3">
-          <TouchableOpacity style={styles.confirmButton} onPress={() => { setSelectedLanguage(selectedId); router.replace("/"); }}>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={() => {
+              const lang = languages.find((l) => l.id === selectedId);
+              posthog.capture("language_selected", {
+                language_id: selectedId,
+                language_name: lang?.name ?? null,
+              });
+              setSelectedLanguage(selectedId);
+              router.replace("/");
+            }}
+          >
             <Text className="btn__label">Confirm language</Text>
           </TouchableOpacity>
         </View>

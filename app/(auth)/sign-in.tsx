@@ -15,6 +15,7 @@ import { useSignIn } from "@clerk/expo";
 import { images } from "@/constants/images";
 import { VerificationModal } from "@/components/VerificationModal";
 import { SocialAuthButtons } from "@/components/SocialAuthButtons";
+import { posthog } from "@/lib/posthog";
 
 export default function SignInScreen() {
   const { signIn, errors, fetchStatus } = useSignIn();
@@ -38,6 +39,8 @@ export default function SignInScreen() {
     if (error) return;
 
     if (signIn.status === "complete") {
+      posthog.identify(email, { $set: { email } });
+      posthog.capture("user_signed_in", { email });
       await signIn.finalize({
         navigate: ({ decorateUrl }) => navigateHome(decorateUrl),
       });
@@ -55,6 +58,8 @@ export default function SignInScreen() {
       return;
     }
     if (signIn.status === "complete") {
+      posthog.identify(email, { $set: { email } });
+      posthog.capture("user_signed_in", { email, method: "mfa" });
       await signIn.finalize({
         navigate: ({ decorateUrl }) => navigateHome(decorateUrl),
       });

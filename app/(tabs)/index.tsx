@@ -17,6 +17,7 @@ import { getUnitsByLanguage } from "@/data/units";
 import { lessons } from "@/data/lessons";
 import { images } from "@/constants/images";
 import { colors } from "@/constants/theme";
+import { posthog } from "@/lib/posthog";
 
 type IoniconsName = ComponentProps<typeof Ionicons>["name"];
 
@@ -156,7 +157,18 @@ export default function HomeScreen() {
                   {"A1 · "}
                   {currentUnit ? `Unit ${currentUnit.order}` : "Unit 1"}
                 </Text>
-                <TouchableOpacity style={styles.continueButton} activeOpacity={0.8}>
+                <TouchableOpacity
+                  style={styles.continueButton}
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    posthog.capture("lesson_continued", {
+                      language_id: language?.id ?? null,
+                      language_name: language?.name ?? null,
+                      unit_order: currentUnit?.order ?? null,
+                      lesson_id: currentLesson?.id ?? null,
+                    });
+                  }}
+                >
                   <Text
                     className="text-sm text-white"
                     style={{ fontFamily: "Poppins-SemiBold" }}

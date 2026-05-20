@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { images } from "@/constants/images";
+import { posthog } from "@/lib/posthog";
 
 export default function OnboardingScreen() {
   return (
@@ -58,7 +59,13 @@ export default function OnboardingScreen() {
 
         {/* Get Started button */}
         <View className="pb-8">
-          <TouchableOpacity style={styles.getStartedBtn} onPress={() => router.push("/(auth)/sign-up")}>
+          <TouchableOpacity
+            style={styles.getStartedBtn}
+            onPress={() => {
+              posthog.capture("onboarding_get_started");
+              router.push("/(auth)/sign-up");
+            }}
+          >
             <View className="w-9" />
             <Text className="flex-1 text-center font-poppins-semibold text-[16px] text-white">
               Get Started
